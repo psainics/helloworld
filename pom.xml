@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>Hello World Plugin</name>
+    <groupId>com.pushpendersaini</groupId>
+    <artifactId>helloworld-plugin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <!--JAVA-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--CDAP-->
+        <cdap.version>6.11.0-SNAPSHOT</cdap.version>
+        <!--HADOOP-->
+        <hadoop.version>3.3.6</hadoop.version>
+    </properties>
+
+    <dependencies>
+        <!--CDAP-->
+        <dependency>
+            <groupId>io.cdap.cdap</groupId>
+            <artifactId>cdap-api</artifactId>
+            <version>${cdap.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cdap.cdap</groupId>
+            <artifactId>cdap-etl-api</artifactId>
+            <version>${cdap.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--HADOOP-->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-mapreduce-client-core</artifactId>
+        <version>${hadoop.version}</version>
+        <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin to compile the code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- Plugin to generate artifacts icons, docs, widget.json, etc. -->
+            <plugin>
+                <groupId>io.cdap</groupId>
+                <artifactId>cdap-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <cdapArtifacts>
+                        <parent>system:cdap-data-pipeline[6.11.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
+                        <parent>system:cdap-data-streams[6.11.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
+                    </cdapArtifacts>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-artifact-config</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>create-plugin-json</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Plugin to package the plugin as in compatible format -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.5.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <_exportcontents>com.pushpendersaini.helloworld.*</_exportcontents>
+                        <Embed-Dependency>*;inline=false;scope=compile</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Directory>lib</Embed-Directory>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

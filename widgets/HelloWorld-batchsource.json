@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "spec-version": "1.5"
+  },
+  "configuration-groups": [
+    {
+      "label": "General",
+      "properties": [
+        {
+          "widget-type": "number",
+          "label": "Frequency",
+          "name": "frequency",
+          "widget-attributes": {
+            "default": 1,
+            "min": 1
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "schema",
+      "widget-type": "schema"
+    }
+  ]
+}

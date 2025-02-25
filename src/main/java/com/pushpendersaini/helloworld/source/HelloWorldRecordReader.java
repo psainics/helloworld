@@ -18,7 +18,7 @@ public class HelloWorldRecordReader extends RecordReader<NullWritable, String> {
   public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
     Configuration conf = taskAttemptContext.getConfiguration();
     // Plugin configuration
-    frequency = conf.getInt(PluginConstants.PROPERTY_CONFIG_FREQUENCY, 1);
+    frequency = conf.getInt(PluginConstants.PROPERTY_CONFIG_KEY_FREQUENCY, 1);
   }
 
   @Override

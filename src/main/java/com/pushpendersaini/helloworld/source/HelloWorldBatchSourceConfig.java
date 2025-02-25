@@ -15,7 +15,7 @@ public class HelloWorldBatchSourceConfig extends PluginConfig {
   public Integer frequency;
 
 
-  @Name(PluginConstants.PROPERTY_NAME_CUSTOM_MESSAGE)
+  @Name(PluginConstants.PROPERTY_NAME_USER_MESSAGE)
   @Description("Custom message")
   @Nullable
   public String message=PluginConstants.PROPERTY_CONFIG_DEFAULT_MESSAGE;

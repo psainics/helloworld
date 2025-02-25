@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class HelloWorldInputFormat extends InputFormat {
+public class HelloWorldInputFormat extends InputFormat<NullWritable, String> {
 
   @Override
   public List<InputSplit> getSplits(JobContext jobContext) throws IOException, InterruptedException {

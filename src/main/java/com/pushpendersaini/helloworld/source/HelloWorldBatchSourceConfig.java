@@ -6,11 +6,20 @@ import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.plugin.PluginConfig;
 import io.cdap.cdap.etl.api.FailureCollector;
 
+import javax.annotation.Nullable;
+
 public class HelloWorldBatchSourceConfig extends PluginConfig {
 
   @Name(PluginConstants.PROPERTY_NAME_FREQUENCY)
   @Description("Number of times the plugin says hello world.")
   public Integer frequency;
+
+
+  @Name(PluginConstants.PROPERTY_NAME_USER_MESSAGE)
+  @Description("Custom message")
+  @Nullable
+  public String message;
+
 
   public void validate(FailureCollector failureCollector) {
     if (frequency != null && frequency < 1) {
@@ -21,5 +30,6 @@ public class HelloWorldBatchSourceConfig extends PluginConfig {
   public int getFrequency() {
     return frequency == null ? PluginConstants.PROPERTY_DEFAULT_FREQUENCY : frequency;
   }
+  public String getMessage(){ return (message == null || message.isEmpty()) ? PluginConstants.PROPERTY_CONFIG_DEFAULT_MESSAGE: message; }
 
 }

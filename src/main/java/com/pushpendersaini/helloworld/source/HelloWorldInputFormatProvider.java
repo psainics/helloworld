@@ -12,7 +12,10 @@ public class HelloWorldInputFormatProvider implements InputFormatProvider {
 
   public HelloWorldInputFormatProvider(HelloWorldBatchSourceConfig config) {
     configMap = new HashMap<>();
+
     configMap.put(PluginConstants.PROPERTY_CONFIG_KEY_FREQUENCY, Integer.toString(config.getFrequency()));
+    configMap.put(PluginConstants.PROPERTY_CONFIG_KEY_MESSAGE, config.getMessage());
+
   }
 
   @Override

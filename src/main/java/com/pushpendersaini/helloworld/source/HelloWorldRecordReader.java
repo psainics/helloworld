@@ -8,17 +8,21 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-public class HelloWorldRecordReader extends RecordReader<NullWritable, String> {
+public class HelloWorldRecordReader extends RecordReader<NullWritable, List<String>> {
 
   private int frequency;
+  private String version;
   private int countProcessed = 0;
 
   @Override
   public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
     Configuration conf = taskAttemptContext.getConfiguration();
     // Plugin configuration
-    frequency = conf.getInt(PluginConstants.PROPERTY_CONFIG_KEY_FREQUENCY, 1);
+    frequency = conf.getInt(PluginConstants.PROPERTY_CONFIG_KEY_FREQUENCY, PluginConstants.PROPERTY_DEFAULT_FREQUENCY);
+    version = conf.get(PluginConstants.PROPERTY_CONFIG_KEY_VERSION, PluginConstants.PROPERTY_DEFAULT_VERSION);
   }
 
   @Override
@@ -32,8 +36,8 @@ public class HelloWorldRecordReader extends RecordReader<NullWritable, String> {
   }
 
   @Override
-  public String getCurrentValue() throws IOException, InterruptedException {
-    return PluginConstants.PLUGIN_OUT_VALUE + "#" + countProcessed;
+  public List<String> getCurrentValue() throws IOException, InterruptedException {
+    return Arrays.asList(PluginConstants.PLUGIN_OUT_VALUE + "#" + countProcessed, version + "." + countProcessed);
   }
 
   @Override

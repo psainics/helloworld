@@ -14,10 +14,12 @@ import io.cdap.cdap.etl.api.batch.BatchSource;
 import io.cdap.cdap.etl.api.batch.BatchSourceContext;
 import org.apache.hadoop.io.NullWritable;
 
+import java.util.List;
+
 @Plugin(type = BatchSource.PLUGIN_TYPE)
 @Name(PluginConstants.PLUGIN_NAME)
 @Description("Says Hello World configured number of times.")
-public class HelloWorldBatchSource extends BatchSource<NullWritable, String, StructuredRecord> {
+public class HelloWorldBatchSource extends BatchSource<NullWritable, List<String>, StructuredRecord> {
 
   private final HelloWorldBatchSourceConfig config;
 
@@ -38,7 +40,13 @@ public class HelloWorldBatchSource extends BatchSource<NullWritable, String, Str
   }
 
   @Override
-  public void transform(KeyValue<NullWritable, String> input, Emitter<StructuredRecord> emitter) throws Exception {
-    emitter.emit(StructuredRecord.builder(PluginConstants.PLUGIN_OUT_SCHEMA).set("message", input.getValue()).build());
+  public void transform(KeyValue<NullWritable, List<String>> input, Emitter<StructuredRecord> emitter) throws Exception {
+    List<String> values = input.getValue();
+    if (values != null && values.size() >= 2) {
+      emitter.emit(StructuredRecord.builder(PluginConstants.PLUGIN_OUT_SCHEMA)
+          .set("message", values.get(0))
+          .set("version", values.get(1))
+          .build());
+    }
   }
 }

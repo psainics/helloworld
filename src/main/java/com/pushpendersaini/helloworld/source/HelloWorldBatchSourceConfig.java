@@ -12,6 +12,10 @@ public class HelloWorldBatchSourceConfig extends PluginConfig {
   @Description("Number of times the plugin says hello world.")
   public Integer frequency;
 
+  @Name(PluginConstants.PROPERTY_NAME_VERSION)
+  @Description("Version Number.")
+  public String version;
+
   public void validate(FailureCollector failureCollector) {
     if (frequency != null && frequency < 1) {
       failureCollector.addFailure("Property cannot be lower than 1.", "Use a frequency value of equal to or more than 1.").withConfigProperty(PluginConstants.PROPERTY_NAME_FREQUENCY);
@@ -22,4 +26,7 @@ public class HelloWorldBatchSourceConfig extends PluginConfig {
     return frequency == null ? PluginConstants.PROPERTY_DEFAULT_FREQUENCY : frequency;
   }
 
+  public String getVersion() {
+    return version == null ? PluginConstants.PROPERTY_DEFAULT_VERSION : version;
+  }
 }

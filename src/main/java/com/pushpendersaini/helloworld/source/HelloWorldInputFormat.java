@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class HelloWorldInputFormat extends InputFormat<NullWritable, String> {
+public class HelloWorldInputFormat extends InputFormat<NullWritable, List<String>> {
 
   @Override
   public List<InputSplit> getSplits(JobContext jobContext) throws IOException, InterruptedException {
@@ -20,7 +20,7 @@ public class HelloWorldInputFormat extends InputFormat<NullWritable, String> {
   }
 
   @Override
-  public RecordReader<NullWritable, String> createRecordReader(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
+  public RecordReader<NullWritable, List<String>> createRecordReader(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
     return new HelloWorldRecordReader();
   }
 }

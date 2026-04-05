@@ -24,7 +24,7 @@
         <!--JAVA-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--CDAP-->
-        <cdap.version>6.11.0-SNAPSHOT</cdap.version>
+        <cdap.version>6.11.1</cdap.version>
         <!--HADOOP-->
         <hadoop.version>3.3.6</hadoop.version>
     </properties>
